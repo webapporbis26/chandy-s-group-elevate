@@ -123,7 +123,10 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import useLenis from "../hooks/useLenis";
+
 function RootComponent() {
+  useLenis();
   const { queryClient } = Route.useRouteContext();
 
   return (

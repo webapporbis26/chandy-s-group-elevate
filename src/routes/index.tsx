@@ -6,6 +6,7 @@ import {
   Award,
   Building2,
   ChevronDown,
+  Clock,
   Cpu,
   Hammer,
   HandshakeIcon,
@@ -15,8 +16,10 @@ import {
   MapPin,
   Menu,
   Phone,
+  Send,
   ShieldCheck,
   Sparkles,
+  Smile,
   Users,
   UtensilsCrossed,
   X,
@@ -30,6 +33,15 @@ import hotelsImg from "@/assets/hotels.jpg";
 import buildersImg from "@/assets/builders.jpg";
 import restaurantImg from "@/assets/restaurant.jpg";
 import excellenceImg from "@/assets/excellence.jpg";
+import logoImg from "@/assets/builders-removebg-preview.png";
+import homeDeskImg from "@/assets/home_desk.png";
+import homeMobImg from "@/assets/home_mob.png";
+import constructDeskImg from "@/assets/construct_desk.png";
+import constMobImg from "@/assets/const_mob.png";
+import resortDeskImg from "@/assets/resort_desk.png";
+import resortMobImg from "@/assets/resort_mob.png";
+import restDeskImg from "@/assets/rest_desk.png";
+import restMobImg from "@/assets/rest_mob.png";
 
 export const Route = createFileRoute("/")({
   component: Landing,
@@ -86,8 +98,6 @@ const NAV = [
   { label: "Home", href: "#home" },
   { label: "Our Companies", href: "#companies" },
   { label: "About", href: "#about" },
-  { label: "Journey", href: "#journey" },
-  { label: "Why Us", href: "#why" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -110,36 +120,20 @@ function Nav() {
         borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
       }}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-6 py-5 md:px-10 md:py-6">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-6 py-2 md:px-10 md:py-3">
         <a
           href="#home"
-          className="flex items-center gap-2"
-          style={{ color: scrolled ? "var(--ink)" : "#fff" }}
+          className="flex items-center"
         >
-          <span
-            className="grid h-9 w-9 place-items-center rounded-full text-[13px] font-semibold shrink-0"
+          <img
+            src={logoImg}
+            alt="Chandy's Group Logo"
+            className="h-[90px] md:h-[140px] w-auto object-contain shrink-0 my-[-30px] md:my-[-50px]"
             style={{
-              background: "var(--gold)",
-              color: "var(--ink)",
-              fontFamily: "var(--font-display)",
+              filter: scrolled ? "brightness(0)" : "none",
+              transition: "filter 0.3s ease",
             }}
-          >
-            C
-          </span>
-          <span className="flex flex-col leading-none">
-            <span
-              className="text-lg tracking-tight"
-              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
-            >
-              Chandy's
-            </span>
-            <span
-              className="mt-0.5 text-[9px] tracking-[0.35em] opacity-70"
-              style={{ fontWeight: 500 }}
-            >
-              GROUP
-            </span>
-          </span>
+          />
         </a>
 
         <nav className="hidden items-center gap-9 lg:flex">
@@ -226,65 +220,137 @@ function Nav() {
 /*  Section 1 — Hero                                                   */
 /* ------------------------------------------------------------------ */
 function Hero() {
+  const SLIDES = [
+    {
+      imgDesk: homeDeskImg,
+      imgMob: homeMobImg,
+      tag: "Homes",
+      title: "Bricks, Mortars &",
+      titleItalic: "A Touch of Love.",
+      desc: "Chandy's Homes turns spaces into beautiful stories. Crafting elegant custom villas and family apartments built to stand the test of time.",
+      link: "https://chandys.co.in/chandys-homes.html",
+    },
+    {
+      imgDesk: constructDeskImg,
+      imgMob: constMobImg,
+      tag: "Construction",
+      title: "Building Trust.",
+      titleItalic: "Creating Excellence.",
+      desc: "Trailblazer builders in the construction landscape of Kerala, engineering landmark structures from first sketch to final key.",
+      link: "https://chandys.co.in/chandys-construction.html",
+    },
+    {
+      imgDesk: resortDeskImg,
+      imgMob: resortMobImg,
+      tag: "Resorts",
+      title: "Windy Woods.",
+      titleItalic: "Drizzle Drops.",
+      desc: "Discover quiet luxury, breathtaking natural landscapes, and curated boutique hospitality designed to create timeless resort memories.",
+      link: "https://chandys.co.in/chandys-hotels-resorts.html",
+    },
+    {
+      imgDesk: restDeskImg,
+      imgMob: restMobImg,
+      tag: "Restaurant",
+      title: "Ente Amma.",
+      titleItalic: "Authentic Culinary.",
+      desc: "Indulge in authentic traditional tastes of Kerala, served with warmth and passion at our landmark Ente Amma Restaurant.",
+      link: "https://chandys.co.in/ente-amma-restaurant.html",
+    },
+  ];
+
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const slide = SLIDES[activeSlide];
+
   return (
     <section id="home" className="relative min-h-[100svh] w-full overflow-hidden">
-      <img
-        src={heroImg}
-        alt="Modern luxury residential architecture at dusk"
-        width={1920}
-        height={1280}
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ transform: "scale(1.04)" }}
-      />
+      {/* Background Images with cross-fade */}
+      {SLIDES.map((s, idx) => (
+        <div
+          key={s.tag}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            activeSlide === idx ? "opacity-100 z-0" : "opacity-0 -z-10"
+          }`}
+        >
+          {/* Mobile Image */}
+          <img
+            src={s.imgMob}
+            alt={`${s.tag} mobile`}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[6000ms] ease-out scale-105 md:hidden"
+            style={{ transform: activeSlide === idx ? "scale(1.01)" : "scale(1.05)" }}
+          />
+          {/* Desktop Image */}
+          <img
+            src={s.imgDesk}
+            alt={`${s.tag} desktop`}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[6000ms] ease-out scale-105 hidden md:block"
+            style={{ transform: activeSlide === idx ? "scale(1.01)" : "scale(1.05)" }}
+          />
+        </div>
+      ))}
+
+      {/* Hero Gradients */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 z-10"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.35) 40%, rgba(10,10,12,0.75) 100%)",
+            "linear-gradient(180deg, rgba(10,10,12,0.6) 0%, rgba(10,10,12,0.4) 40%, rgba(10,10,12,0.85) 100%)",
         }}
       />
       <div
-        className="absolute inset-x-0 top-0 h-40"
+        className="absolute inset-x-0 top-0 h-40 z-10"
         style={{
-          background: "linear-gradient(180deg, rgba(0,0,0,0.5), transparent)",
+          background: "linear-gradient(180deg, rgba(0,0,0,0.55), transparent)",
         }}
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-end px-6 pb-24 pt-40 md:px-10 md:pb-32">
+      {/* Hero Content */}
+      <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-end px-6 pb-24 pt-32 md:px-10 md:pb-32">
         <div className="max-w-4xl text-white">
           <Reveal>
-            <div className="mb-8 flex items-center gap-4">
+            <div className="mb-6 flex items-center gap-4">
               <span className="h-px w-14" style={{ background: "var(--gold)" }} />
               <span
                 className="text-[11px] tracking-[0.4em] uppercase"
                 style={{ color: "var(--gold-soft)" }}
               >
-                Since 1994 · Kerala, India
+                Chandy's Group · {slide.tag}
               </span>
             </div>
           </Reveal>
           <Reveal delay={150}>
             <h1
-              className="text-[clamp(2.75rem,7vw,6.5rem)] font-medium leading-[1.02] tracking-tight"
+              className="text-[clamp(1.9rem,5.5vw,4.5rem)] font-medium leading-[1.05] tracking-tight"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Building Trust.
+              {slide.title}
               <br />
-              Creating Excellence.
-              <br />
-              <span style={{ fontStyle: "italic", color: "var(--gold-soft)" }}>Since 1994.</span>
+              <span style={{ fontStyle: "italic", color: "var(--gold-soft)" }}>{slide.titleItalic}</span>
             </h1>
           </Reveal>
           <Reveal delay={300}>
-            <p className="mt-8 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
-              Chandy's Group is a diversified business group delivering excellence across
-              multiple industries through innovation, quality, and decades of trusted experience.
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/80 md:mt-8 md:text-lg">
+              {slide.desc}
             </p>
           </Reveal>
           <Reveal delay={450}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a href="#companies" className="btn-ink" style={{ background: "var(--gold)", color: "var(--ink)", boxShadow: "0 20px 40px -20px rgba(200,167,106,0.55)" }}>
-                Explore Companies
+              <a
+                href={slide.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ink"
+                style={{ background: "var(--gold)", color: "var(--ink)", boxShadow: "0 20px 40px -20px rgba(200,167,106,0.55)" }}
+              >
+                Explore {slide.tag}
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a href="#contact" className="btn-ghost">Contact Us</a>
@@ -292,8 +358,30 @@ function Hero() {
           </Reveal>
         </div>
 
-        <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70">
-          <div className="flex flex-col items-center gap-2">
+        {/* Slide navigation controls */}
+        <div className="absolute bottom-6 left-6 right-6 md:left-10 md:right-10 flex items-center justify-between z-30">
+          <div className="flex gap-3 md:gap-6 overflow-x-auto no-scrollbar">
+            {SLIDES.map((s, idx) => (
+              <button
+                key={s.tag}
+                onClick={() => setActiveSlide(idx)}
+                className={`group flex flex-col items-start transition-all ${
+                  activeSlide === idx ? "text-white" : "text-white/40 hover:text-white/80"
+                }`}
+              >
+                <span className="text-[10px] md:text-[11px] uppercase tracking-widest font-medium whitespace-nowrap">
+                  {s.tag}
+                </span>
+                <div
+                  className={`h-0.5 w-12 transition-all mt-2 ${
+                    activeSlide === idx ? "bg-[color:var(--gold)] w-16" : "bg-white/20"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="pointer-events-none hidden md:flex flex-col items-center gap-2 text-white/70">
             <span className="text-[10px] tracking-[0.4em] uppercase">Scroll</span>
             <ChevronDown className="h-4 w-4 animate-scroll-hint" />
           </div>
@@ -314,7 +402,7 @@ function About() {
     { k: "Quality", v: "Industry benchmark" },
   ];
   return (
-    <section id="about" className="relative py-28 md:py-40">
+    <section id="about" className="relative py-12 md:py-20">
       <div className="mx-auto grid max-w-[1400px] gap-14 px-6 md:px-10 lg:grid-cols-12 lg:gap-20">
         <Reveal className="lg:col-span-6">
           <div className="relative overflow-hidden rounded-3xl">
@@ -324,7 +412,7 @@ function About() {
               width={1200}
               height={1400}
               loading="lazy"
-              className="h-[560px] w-full object-cover md:h-[720px]"
+              className="h-[400px] w-full object-cover md:h-[520px]"
             />
             <div
               className="absolute inset-0"
@@ -350,22 +438,22 @@ function About() {
           </div>
         </Reveal>
 
-        <div className="lg:col-span-6 lg:pt-8">
+        <div className="lg:col-span-6 lg:pt-4">
           <Reveal>
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-4 flex items-center gap-3">
               <span className="gold-rule" />
               <span className="eyebrow">About Chandy's Group</span>
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="text-[clamp(2rem,4.4vw,3.8rem)] leading-[1.05]">
+            <h2 className="text-[clamp(1.75rem,3.8vw,2.8rem)] leading-[1.05]">
               A legacy of craftsmanship,
               <br />
               built to stand the test of time.
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <div className="mt-8 space-y-6 text-[15px] leading-[1.85] text-[color:var(--ink-soft)] md:text-base">
+            <div className="mt-6 space-y-4 text-[15px] leading-[1.75] text-[color:var(--ink-soft)] md:text-base">
               <p>
                 We started our journey in 1994. Since then, we've been touted as trailblazer
                 builders in the construction landscape of Kerala. Beyond bricks and mortars,
@@ -381,11 +469,11 @@ function About() {
             </div>
           </Reveal>
           <Reveal delay={300}>
-            <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-y py-8" style={{ borderColor: "var(--line)" }}>
+            <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 border-y py-6" style={{ borderColor: "var(--line)" }}>
               {pillars.map((p) => (
                 <div key={p.k}>
                   <div
-                    className="text-2xl md:text-3xl"
+                    className="text-xl md:text-2xl"
                     style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
                   >
                     {p.k}
@@ -398,7 +486,7 @@ function About() {
             </div>
           </Reveal>
           <Reveal delay={400}>
-            <a href="#companies" className="mt-10 inline-flex items-center gap-2 text-sm font-medium">
+            <a href="#companies" className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
               Read More
               <span className="grid h-9 w-9 place-items-center rounded-full transition-transform group-hover:translate-x-1" style={{ background: "var(--ink)", color: "var(--paper)" }}>
                 <ArrowRight className="h-4 w-4" />
@@ -419,6 +507,7 @@ type Company = {
   desc: string;
   img: string;
   Icon: typeof Building2;
+  link: string;
 };
 
 const COMPANIES: Company[] = [
@@ -427,39 +516,46 @@ const COMPANIES: Company[] = [
     desc: "Trailblazer builders shaping Kerala's skyline with apartments and community projects benchmarked against the highest industry standards.",
     img: constructionsImg,
     Icon: Building2,
+    link: "https://chandys.co.in/chandys-construction.html",
   },
   {
     name: "Chandy's Homes",
     desc: "Where passion and professionalism meet. Beautiful abodes built with a deep connection to those who will call them home.",
     img: homesImg,
     Icon: Home,
+    link: "https://chandys.co.in/chandys-homes.html",
   },
   {
     name: "Chandy's Hotels & Resorts",
     desc: "Signature hospitality experiences including Windy Woods and Drizzle Drops — retreats crafted for quiet luxury.",
     img: hotelsImg,
     Icon: Hotel,
+    link: "https://chandys.co.in/chandys-hotels-resorts.html",
   },
   {
     name: "Chandy's Builders",
     desc: "Expert construction execution blending traditional craftsmanship with modern engineering to deliver landmark projects.",
     img: buildersImg,
     Icon: Hammer,
+    link: "https://chandys.co.in/chandys-builders.html",
   },
   {
     name: "Restaurant Ente Amma",
     desc: "A warm culinary home celebrating the flavours of Kerala with heart, hospitality and heritage on every plate.",
     img: restaurantImg,
     Icon: UtensilsCrossed,
+    link: "https://chandys.co.in/ente-amma-restaurant.html",
   },
 ];
 
 function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
   return (
     <a
-      href="#contact"
+      href={c.link}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`group relative overflow-hidden rounded-3xl ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
-      style={{ minHeight: large ? 620 : 380, boxShadow: "var(--shadow-card)" }}
+      style={{ minHeight: large ? 420 : 280, boxShadow: "var(--shadow-card)" }}
     >
       <img
         src={c.img}
@@ -497,7 +593,7 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
             </span>
           </div>
           <h3
-            className={`${large ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"} leading-[1.05]`}
+            className={`${large ? "text-2xl md:text-4xl lg:text-5xl" : "text-xl md:text-2xl lg:text-3xl"} leading-[1.05]`}
             style={{ fontFamily: "var(--font-display)" }}
           >
             {c.name}
@@ -517,7 +613,7 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
 
 function Companies() {
   return (
-    <section id="companies" className="relative py-28 md:py-40" style={{ background: "var(--paper)" }}>
+    <section id="companies" className="relative pt-12 pb-20 md:pt-20 md:pb-28" style={{ background: "var(--paper)" }}>
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-16 flex flex-col justify-between gap-8 md:mb-20 md:flex-row md:items-end">
           <div className="max-w-3xl">
@@ -528,7 +624,7 @@ function Companies() {
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[clamp(2rem,4.6vw,4rem)] leading-[1.05]">
+              <h2 className="text-[clamp(1.75rem,3.8vw,2.8rem)] leading-[1.05]">
                 Delivering excellence
                 <br />
                 across <em style={{ color: "var(--gold)" }}>multiple industries.</em>
@@ -557,65 +653,146 @@ function Companies() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Section 4 — Journey                                                */
-/* ------------------------------------------------------------------ */
-const JOURNEY = [
-  { year: "1994", title: "Company Founded", desc: "Chandy's begins its journey as trailblazer builders in Kerala." },
-  { year: "2000s", title: "Business Expansion", desc: "Growing footprint across residential and community projects." },
-  { year: "2010s", title: "New Companies", desc: "Expansion into homes, hotels & resorts and hospitality." },
-  { year: "2020s", title: "Industry Leadership", desc: "Recognised for craftsmanship, quality and customer trust." },
-  { year: "Today", title: "A Diversified Group", desc: "A family of companies delivering excellence across industries." },
-];
 
-function Journey() {
+
+
+
+/* ------------------------------------------------------------------ */
+/*  Section 6 — Business Excellence                                    */
+/* ------------------------------------------------------------------ */
+function Excellence() {
+  const pillars = [
+    {
+      k: "Quality",
+      v: "Highest industry standard in every material and finish we deliver.",
+      Icon: Award,
+    },
+    {
+      k: "Technology",
+      v: "Modern methods and advanced materials for stronger tomorrow.",
+      Icon: Cpu,
+    },
+    {
+      k: "Team",
+      v: "In-house professionals with experience, dedication, and attention to detail.",
+      Icon: Users,
+    },
+    {
+      k: "Innovation",
+      v: "Ahead of the times with creative solutions that build the future, today.",
+      Icon: Sparkles,
+    },
+    {
+      k: "Customers",
+      v: "Built on trust, delivering long-term relationships and lasting satisfaction.",
+      Icon: ShieldCheck,
+    },
+  ];
+
   return (
-    <section id="journey" className="relative py-28 md:py-40">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <Reveal>
-          <div className="mb-5 flex items-center gap-3">
-            <span className="gold-rule" />
-            <span className="eyebrow">Our Journey</span>
-          </div>
-        </Reveal>
-        <Reveal delay={100}>
-          <h2 className="max-w-4xl text-[clamp(2rem,4.4vw,3.8rem)] leading-[1.05]">
-            Three decades of building —
-            <br />
-            <em style={{ color: "var(--gold)" }}>one milestone at a time.</em>
-          </h2>
-        </Reveal>
+    <section
+      className="relative overflow-hidden"
+      style={{ background: "#0a0a0a", color: "var(--paper)" }}
+    >
+      {/* Architecture image — right half overlay */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[55%] pointer-events-none">
+        <img
+          src={excellenceImg}
+          alt="Modern glass architecture"
+          loading="lazy"
+          className="h-full w-full object-cover object-center opacity-60"
+        />
+        {/* Left fade to black */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.85) 30%, rgba(10,10,10,0.3) 70%, transparent 100%)",
+          }}
+        />
+        {/* Bottom fade */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 85%, #0a0a0a 100%)",
+          }}
+        />
+      </div>
 
-        <div className="mt-20 hidden lg:block">
-          <div className="relative">
-            <div
-              className="absolute left-0 right-0 top-[54px] h-px"
-              style={{ background: "linear-gradient(90deg, transparent, var(--line) 15%, var(--line) 85%, transparent)" }}
-            />
-            <div className="grid grid-cols-5 gap-4">
-              {JOURNEY.map((j, i) => (
-                <Reveal key={j.year} delay={i * 120}>
-                  <div className="flex flex-col items-start">
-                    <div
-                      className="text-sm tracking-[0.3em] uppercase"
-                      style={{ color: "var(--gold)" }}
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Single row: heading left, pillars right — same height */}
+        <div className="grid gap-10 pt-6 pb-6 md:pt-8 md:pb-8 lg:grid-cols-12 lg:gap-16 items-center">
+
+          {/* Left: Heading + Body */}
+          <div className="lg:col-span-5 flex flex-col justify-center">
+            <Reveal>
+              <div className="mb-5 flex items-center gap-3">
+                <span className="gold-rule" />
+                <span className="eyebrow" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  Business Excellence
+                </span>
+              </div>
+            </Reveal>
+            <Reveal delay={100}>
+              <h2
+                className="text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] font-medium text-white"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Excellence is
+                <br />
+                not a moment.
+                <br />
+                <em style={{ color: "var(--gold)", fontStyle: "italic" }}>
+                  It is a discipline.
+                </em>
+              </h2>
+            </Reveal>
+            <Reveal delay={200}>
+              <div className="mt-6 h-px w-12" style={{ background: "var(--gold)" }} />
+            </Reveal>
+            <Reveal delay={280}>
+              <p className="mt-6 text-[15px] leading-[1.85] text-white/60 max-w-sm">
+                From the very moment of ideating the sketches to handing over the keys, we
+                meticulously select the materials of the highest possible standard. The result
+                is dream buildings that stand the test of time — blending the best of both
+                traditional and modern construction techniques.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Right: 5 Pillars overlaid on the building image area */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-0">
+              {pillars.map((p, i) => (
+                <Reveal key={p.k} delay={i * 80}>
+                  <div
+                    className={`flex flex-col items-center text-center px-2 py-2 md:px-3 ${
+                      i < pillars.length - 1 ? "md:border-r md:border-white/[0.08]" : ""
+                    }`}
+                  >
+                    {/* Circular outlined icon */}
+                    <span
+                      className="grid h-12 w-12 place-items-center rounded-full mb-4"
+                      style={{
+                        border: "1px solid rgba(200,167,106,0.45)",
+                        background: "rgba(200,167,106,0.07)",
+                      }}
                     >
-                      {j.year}
-                    </div>
-                    <div className="mt-6 grid h-6 w-6 place-items-center">
-                      <span
-                        className="h-3 w-3 rounded-full ring-4"
-                        style={{ background: "var(--ink)", boxShadow: "0 0 0 6px var(--canvas)" }}
-                      />
-                    </div>
-                    <h3
-                      className="mt-6 text-xl leading-tight"
+                      <p.Icon className="h-5 w-5" style={{ color: "var(--gold)" }} />
+                    </span>
+                    <span
+                      className="text-base md:text-lg text-white mb-2"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
-                      {j.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-soft)]">
-                      {j.desc}
+                      {p.k}
+                    </span>
+                    <span
+                      className="mb-2 h-px w-6 block"
+                      style={{ background: "var(--gold)", opacity: 0.45 }}
+                    />
+                    <p className="text-[10px] md:text-[11px] leading-relaxed text-white/45 max-w-[110px]">
+                      {p.v}
                     </p>
                   </div>
                 </Reveal>
@@ -624,188 +801,7 @@ function Journey() {
           </div>
         </div>
 
-        {/* Mobile vertical timeline */}
-        <div className="mt-16 lg:hidden">
-          <div className="relative pl-8">
-            <div className="absolute bottom-0 left-3 top-0 w-px" style={{ background: "var(--line)" }} />
-            {JOURNEY.map((j) => (
-              <div key={j.year} className="relative mb-10">
-                <span
-                  className="absolute -left-6 top-1 h-3 w-3 rounded-full"
-                  style={{ background: "var(--gold)", boxShadow: "0 0 0 5px var(--canvas)" }}
-                />
-                <div className="text-xs tracking-[0.3em] uppercase" style={{ color: "var(--gold)" }}>
-                  {j.year}
-                </div>
-                <h3 className="mt-2 text-xl" style={{ fontFamily: "var(--font-display)" }}>
-                  {j.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--ink-soft)]">{j.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-/* ------------------------------------------------------------------ */
-/*  Section 5 — Why Choose                                             */
-/* ------------------------------------------------------------------ */
-const WHY = [
-  { Icon: Award, title: "Quality", desc: "Benchmarked against the highest standards in the industry at every touchpoint." },
-  { Icon: Sparkles, title: "Experience", desc: "Three decades of trailblazing work in Kerala's construction landscape." },
-  { Icon: Cpu, title: "Innovation", desc: "Structures ideated in-house and designed to be ahead of the times." },
-  { Icon: HandshakeIcon, title: "Customer Commitment", desc: "We value every penny our clients invest in their dreams." },
-  { Icon: Users, title: "Professional Team", desc: "An in-house team of professionals ideating, designing and building." },
-  { Icon: ShieldCheck, title: "Long-term Trust", desc: "Signature buildings that stand — and speak for — the test of time." },
-];
-
-function WhyUs() {
-  return (
-    <section id="why" className="relative py-28 md:py-40" style={{ background: "var(--paper)" }}>
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <div className="max-w-3xl">
-            <Reveal>
-              <div className="mb-5 flex items-center gap-3">
-                <span className="gold-rule" />
-                <span className="eyebrow">Why Chandy's</span>
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 className="text-[clamp(2rem,4.4vw,3.8rem)] leading-[1.05]">
-                Reasons our clients
-                <br />
-                <em style={{ color: "var(--gold)" }}>keep coming back.</em>
-              </h2>
-            </Reveal>
-          </div>
-        </div>
-
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-3xl md:grid-cols-2 lg:grid-cols-3" style={{ background: "var(--line)" }}>
-          {WHY.map((w, i) => (
-            <Reveal key={w.title} delay={i * 80}>
-              <div
-                className="group relative h-full p-8 transition-colors duration-500 hover:bg-[color:var(--ink)] md:p-10"
-                style={{ background: "var(--paper)" }}
-              >
-                <span
-                  className="grid h-12 w-12 place-items-center rounded-full transition-all duration-500 group-hover:bg-[color:var(--gold)]"
-                  style={{ background: "var(--canvas)" }}
-                >
-                  <w.Icon className="h-5 w-5 transition-colors" />
-                </span>
-                <h3
-                  className="mt-8 text-2xl leading-snug transition-colors duration-500 group-hover:text-white"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {w.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[color:var(--ink-soft)] transition-colors duration-500 group-hover:text-white/75">
-                  {w.desc}
-                </p>
-                <div
-                  className="mt-8 h-px w-full transition-all duration-500 group-hover:bg-[color:var(--gold)]"
-                  style={{ background: "var(--line)" }}
-                />
-                <div className="mt-4 text-[10px] tracking-[0.35em] uppercase text-[color:var(--ink-soft)] transition-colors duration-500 group-hover:text-white/60">
-                  0{i + 1} / 06
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section 6 — Business Excellence                                    */
-/* ------------------------------------------------------------------ */
-function Excellence() {
-  const stats = [
-    { k: "Quality", v: "Highest industry standard" },
-    { k: "Technology", v: "Modern methods & materials" },
-    { k: "Team", v: "In-house professionals" },
-    { k: "Innovation", v: "Ahead of the times" },
-    { k: "Customers", v: "Long-term trust" },
-  ];
-  return (
-    <section className="relative overflow-hidden py-28 md:py-40" style={{ background: "var(--ink)", color: "var(--paper)" }}>
-      <img
-        src={excellenceImg}
-        alt="Modern glass architecture"
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover opacity-25"
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.75) 50%, rgba(17,17,17,0.95) 100%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
-          <div className="lg:col-span-6">
-            <Reveal>
-              <div className="mb-5 flex items-center gap-3">
-                <span className="gold-rule" />
-                <span className="eyebrow" style={{ color: "rgba(255,255,255,0.65)" }}>
-                  Business Excellence
-                </span>
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 className="text-[clamp(2rem,4.6vw,4rem)] leading-[1.05] text-white">
-                Excellence is not a moment.
-                <br />
-                <em style={{ color: "var(--gold)" }}>It is a discipline.</em>
-              </h2>
-            </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-8 max-w-xl text-[15px] leading-[1.85] text-white/70">
-                From the very moment of ideating the sketches to handing over the keys, we
-                meticulously select the materials of the highest possible standard. The result
-                is dream buildings that stand the test of time — blending the best of both
-                traditional and modern construction techniques.
-              </p>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-6">
-            <div className="grid gap-px overflow-hidden rounded-2xl" style={{ background: "rgba(255,255,255,0.1)" }}>
-              {stats.map((s, i) => (
-                <Reveal key={s.k} delay={i * 90}>
-                  <div
-                    className="flex items-center justify-between px-6 py-6 md:px-8 md:py-7"
-                    style={{ background: "rgba(17,17,17,0.9)" }}
-                  >
-                    <div className="flex items-center gap-6">
-                      <span
-                        className="text-[10px] tracking-[0.35em] uppercase"
-                        style={{ color: "var(--gold)" }}
-                      >
-                        0{i + 1}
-                      </span>
-                      <span
-                        className="text-2xl md:text-3xl"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
-                        {s.k}
-                      </span>
-                    </div>
-                    <span className="text-right text-sm text-white/60 md:text-base">
-                      {s.v}
-                    </span>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -817,32 +813,66 @@ function Excellence() {
 const FEATURES = [
   {
     tag: "Homes",
-    title: "Bricks, mortars & a touch of love.",
-    body:
-      "Chandy's Homes is where passion and professionalism take center stage. For us, a home holds a deep connection with its inhabitants — so we mix bricks and mortars with a touch of love to turn spaces into beautiful abodes.",
+    title: "Bricks, mortars &",
+    titleGold: "a touch of love.",
+    body: "Chandy's Homes is where passion and professionalism take center stage. For us, a home holds a deep connection with its inhabitants — so we mix bricks and mortars with a touch of love to turn spaces into beautiful stories.",
     img: homesImg,
+    link: "https://chandys.co.in/chandys-homes.html",
+    subFeatures: [
+      { name: "Thoughtful Design", Icon: Hammer },
+      { name: "Premium Quality", Icon: Award },
+      { name: "Personalized Approach", Icon: Users },
+    ],
   },
   {
     tag: "Hotels & Resorts",
-    title: "Signature retreats. Windy Woods & Drizzle Drops.",
-    body:
-      "Our hospitality portfolio brings the same craftsmanship to leisure — quiet, elegant retreats where design, service and setting come together.",
+    title: "Signature retreats.",
+    titleGold: "Windy Woods & Drizzle Drops.",
+    body: "Our hospitality portfolio brings the same craftsmanship to leisure — quiet, elegant retreats where design, service and setting come together to create unforgettable stays.",
     img: hotelsImg,
+    link: "https://chandys.co.in/chandys-hotels-resorts.html",
+    subFeatures: [
+      { name: "Luxury Living", Icon: Hotel },
+      { name: "Premium Service", Icon: Sparkles },
+      { name: "Scenic Locations", Icon: MapPin },
+    ],
   },
   {
     tag: "Constructions",
-    title: "Structures that are ahead of the times.",
-    body:
-      "Whether it is a soaring apartment or a community villa project, our buildings leave a signature that speaks for our excellence — engineered in-house from first sketch to final key.",
+    title: "Structures that are",
+    titleGold: "ahead of the times.",
+    body: "Whether it is a soaring apartment or a community villa project, our buildings leave a signature that speaks for our excellence — engineered in-house from first sketch to final key.",
     img: constructionsImg,
+    link: "https://chandys.co.in/chandys-construction.html",
+    subFeatures: [
+      { name: "Modern Methods", Icon: Cpu },
+      { name: "Quality Materials", Icon: ShieldCheck },
+      { name: "Expert Team", Icon: HandshakeIcon },
+    ],
   },
 ];
 
 function Featured() {
+  const [activeTab, setActiveTab] = useState(0);
+  const active = FEATURES[activeTab];
+
+  const STATS = [
+    { val: "50+", label: "Homes Built", Icon: Home },
+    { val: "100+", label: "Happy Families", Icon: Smile },
+    { val: "10+", label: "Years of Trust", Icon: Award },
+    { val: "Kerala", label: "& Beyond", Icon: MapPin },
+  ];
+
   return (
-    <section className="relative py-28 md:py-40">
+    <section className="relative py-12 md:py-20 overflow-hidden">
+      {/* Faint Background Watermark matching layout */}
+      <div className="absolute right-[-4rem] top-0 text-[20rem] font-bold text-black/5 opacity-[0.02] select-none pointer-events-none font-display leading-none">
+        CH
+      </div>
+
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="mb-16 max-w-3xl md:mb-24">
+        {/* Header Block */}
+        <div className="mb-12 max-w-3xl">
           <Reveal>
             <div className="mb-5 flex items-center gap-3">
               <span className="gold-rule" />
@@ -850,71 +880,122 @@ function Featured() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="text-[clamp(2rem,4.4vw,3.8rem)] leading-[1.05]">
+            <h2 className="text-[clamp(1.75rem,3.8vw,2.8rem)] leading-[1.05]">
               A closer look at
               <br />
               <em style={{ color: "var(--gold)" }}>what we do best.</em>
             </h2>
           </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-4 text-sm text-[color:var(--ink-soft)] leading-relaxed">
+              Thoughtful design. Timeless quality.<br />
+              Spaces made for life.
+            </p>
+          </Reveal>
         </div>
 
-        <div className="space-y-24 md:space-y-32">
-          {FEATURES.map((f, i) => {
-            const reversed = i % 2 === 1;
-            return (
-              <div
-                key={f.tag}
-                className={`grid items-center gap-10 lg:grid-cols-12 lg:gap-16 ${reversed ? "" : ""}`}
-              >
-                <Reveal className={`lg:col-span-7 ${reversed ? "lg:order-2" : ""}`}>
-                  <div className="overflow-hidden rounded-3xl" style={{ boxShadow: "var(--shadow-card)" }}>
-                    <img
-                      src={f.img}
-                      alt={f.title}
-                      loading="lazy"
-                      className="h-[380px] w-full object-cover transition-transform duration-[1600ms] hover:scale-[1.04] md:h-[560px]"
-                    />
+        {/* Tab Selection menu */}
+        <div className="mb-8 flex flex-wrap gap-x-8 gap-y-4 border-b border-line pb-4">
+          {FEATURES.map((f, idx) => (
+            <button
+              key={f.tag}
+              onClick={() => setActiveTab(idx)}
+              className={`pb-4 text-xs font-semibold tracking-widest uppercase transition-all relative ${
+                activeTab === idx ? "text-[color:var(--ink)]" : "text-[color:var(--ink-soft)] hover:text-[color:var(--ink)]"
+              }`}
+            >
+              <span className="mr-2 text-[10px] opacity-60">0{idx + 1}</span>
+              {f.tag}
+              {activeTab === idx && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[color:var(--gold)]" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Main Card Element */}
+        <div className="overflow-hidden rounded-[32px] bg-[#111] grid lg:grid-cols-12" style={{ boxShadow: "var(--shadow-luxe)" }}>
+          {/* Left: Image Side */}
+          <div className="lg:col-span-7 relative h-[240px] sm:h-[300px] lg:h-[500px] overflow-hidden">
+            <img
+              src={active.img}
+              alt={active.tag}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
+              style={{ borderRadius: "32px 32px 0 0" }}
+            />
+            {/* Soft gold accent rule at bottom of image on mobile */}
+            <div className="absolute bottom-0 left-0 right-0 h-[4px] bg-[color:var(--gold)] lg:hidden" />
+          </div>
+
+          {/* Right: Content Side */}
+          <div className="lg:col-span-5 p-6 md:p-8 lg:p-10 flex flex-col justify-between text-white bg-[#151515] relative">
+            <div>
+              {/* Card Tag */}
+              <div className="flex items-center gap-3 text-white/50 text-[10px] tracking-widest uppercase">
+                <span>0{activeTab + 1}</span>
+                <span className="h-px w-8 bg-white/20" />
+                <span>{active.tag}</span>
+              </div>
+
+              {/* Card Title */}
+              <h3 className="mt-4 md:mt-6 text-2xl md:text-3xl leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                {active.title} <br />
+                <span className="italic text-[color:var(--gold-soft)]">{active.titleGold}</span>
+              </h3>
+
+              <div className="mt-4 h-px w-12 bg-white/10" />
+
+              {/* Description body */}
+              <p className="mt-5 text-sm leading-relaxed text-white/70">
+                {active.body}
+              </p>
+            </div>
+
+            {/* Sub-features & CTA Button */}
+            <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/10">
+              <div className="grid grid-cols-3 gap-2 mb-8">
+                {active.subFeatures.map((sf) => (
+                  <div key={sf.name} className="flex flex-col items-center text-center">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-[color:var(--gold-soft)] mb-2">
+                      <sf.Icon className="h-5 w-5" />
+                    </span>
+                    <span className="text-[10px] leading-tight text-white/60">
+                      {sf.name}
+                    </span>
                   </div>
-                </Reveal>
-                <div className={`lg:col-span-5 ${reversed ? "lg:order-1" : ""}`}>
-                  <Reveal delay={120}>
-                    <div className="flex items-center gap-3">
-                      <span
-                        className="text-[10px] tracking-[0.4em] uppercase"
-                        style={{ color: "var(--gold)" }}
-                      >
-                        0{i + 1} · {f.tag}
-                      </span>
-                    </div>
-                  </Reveal>
-                  <Reveal delay={220}>
-                    <h3
-                      className="mt-6 text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.1]"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {f.title}
-                    </h3>
-                  </Reveal>
-                  <Reveal delay={320}>
-                    <p className="mt-6 text-[15px] leading-[1.85] text-[color:var(--ink-soft)]">
-                      {f.body}
-                    </p>
-                  </Reveal>
-                  <Reveal delay={420}>
-                    <a href="#companies" className="mt-8 inline-flex items-center gap-3 text-sm font-medium">
-                      Discover more
-                      <span
-                        className="grid h-9 w-9 place-items-center rounded-full"
-                        style={{ background: "var(--ink)", color: "var(--paper)" }}
-                      >
-                        <ArrowUpRight className="h-4 w-4" />
-                      </span>
-                    </a>
-                  </Reveal>
+                ))}
+              </div>
+
+              <a
+                href={active.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--gold)] py-3.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--ink)] transition-all duration-300 hover:bg-[color:var(--gold-soft)]"
+              >
+                Explore Our {active.tag}
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Strip below card */}
+        <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-6 border-t border-line pt-8">
+          {STATS.map((s) => (
+            <div key={s.label} className="flex items-center gap-4">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-[color:var(--gold)] bg-white/50">
+                <s.Icon className="h-4.5 w-4.5" />
+              </span>
+              <div>
+                <div className="text-xl font-bold leading-none text-[color:var(--ink)]" style={{ fontFamily: "var(--font-display)" }}>
+                  {s.val}
+                </div>
+                <div className="mt-1 text-[10px] text-[color:var(--ink-soft)] uppercase tracking-wider">
+                  {s.label}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -925,9 +1006,15 @@ function Featured() {
 /*  Section 8 — Values                                                 */
 /* ------------------------------------------------------------------ */
 function Values() {
-  const values = ["Integrity", "Quality", "Commitment", "Trust", "Innovation"];
+  const values = [
+    { name: "Integrity", Icon: ShieldCheck },
+    { name: "Quality", Icon: Award },
+    { name: "Commitment", Icon: HandshakeIcon },
+    { name: "Trust", Icon: Users },
+    { name: "Innovation", Icon: Sparkles },
+  ];
   return (
-    <section className="relative py-28 md:py-40" style={{ background: "var(--paper)" }}>
+    <section className="relative py-12 md:py-20" style={{ background: "var(--paper)" }}>
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           <div className="lg:col-span-5">
@@ -938,7 +1025,7 @@ function Values() {
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[clamp(2rem,4.4vw,3.8rem)] leading-[1.05]">
+              <h2 className="text-[clamp(1.75rem,3.8vw,2.8rem)] leading-[1.05]">
                 What we
                 <br />
                 <em style={{ color: "var(--gold)" }}>strive for.</em>
@@ -955,7 +1042,7 @@ function Values() {
           <div className="lg:col-span-7">
             <div className="grid gap-8 md:grid-cols-2">
               <Reveal>
-                <div className="rounded-3xl border p-8 md:p-10" style={{ borderColor: "var(--line)" }}>
+                <div className="rounded-3xl border p-6 md:p-8" style={{ borderColor: "var(--line)" }}>
                   <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
                     Our Mission
                   </div>
@@ -970,7 +1057,7 @@ function Values() {
               </Reveal>
               <Reveal delay={120}>
                 <div
-                  className="rounded-3xl p-8 md:p-10"
+                  className="rounded-3xl p-6 md:p-8"
                   style={{ background: "var(--ink)", color: "var(--paper)" }}
                 >
                   <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
@@ -988,21 +1075,19 @@ function Values() {
             </div>
 
             <Reveal delay={200}>
-              <div className="mt-8 rounded-3xl border p-8 md:p-10" style={{ borderColor: "var(--line)" }}>
+              <div className="mt-6 md:mt-8 rounded-3xl border p-6 md:p-8" style={{ borderColor: "var(--line)" }}>
                 <div className="mb-6 text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
                   Core Values
                 </div>
                 <div className="flex flex-wrap gap-x-10 gap-y-4">
-                  {values.map((v, i) => (
-                    <div key={v} className="flex items-baseline gap-3">
-                      <span className="text-xs tracking-widest text-[color:var(--ink-soft)]">
-                        0{i + 1}
-                      </span>
+                  {values.map((v) => (
+                    <div key={v.name} className="flex items-center gap-3">
+                      <v.Icon className="h-5 w-5 shrink-0" style={{ color: "var(--gold)" }} />
                       <span
-                        className="text-2xl md:text-3xl"
+                        className="text-xl md:text-2xl"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
-                        {v}
+                        {v.name}
                       </span>
                     </div>
                   ))}
@@ -1020,117 +1105,223 @@ function Values() {
 /*  Section 9 — Contact                                                */
 /* ------------------------------------------------------------------ */
 function Contact() {
-  return (
-    <section id="contact" className="relative py-28 md:py-40">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="mb-14 max-w-4xl">
-          <Reveal>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="gold-rule" />
-              <span className="eyebrow">Contact</span>
-            </div>
-          </Reveal>
-          <Reveal delay={100}>
-            <h2 className="text-[clamp(2.2rem,5vw,4.5rem)] leading-[1.02]">
-              Let's Build the
-              <br />
-              <em style={{ color: "var(--gold)" }}>Future Together.</em>
-            </h2>
-          </Reveal>
-        </div>
+  const contacts = [
+    { Icon: MapPin, label: "Head Office", value: "Chandy's AAA Centre,\nEttumanoor, Kerala, India" },
+    { Icon: Phone, label: "Mobile", value: "+91 98959 79999" },
+    { Icon: Mail, label: "Email", value: "info@chandysbuilders.com" },
+  ];
 
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+  return (
+    <section
+      id="contact"
+      className="relative py-6 md:py-10 overflow-hidden"
+      style={{ background: "var(--paper)" }}
+    >
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Big rounded card wrapping entire contact area */}
+        <div
+          className="relative rounded-3xl p-6 md:p-10"
+          style={{
+            background: "var(--canvas)",
+            border: "1px solid var(--line)",
+            boxShadow: "0 4px 32px rgba(0,0,0,0.06)",
+          }}
+        >
+          {/* Dot pattern bottom-left */}
+          <div
+            className="pointer-events-none absolute bottom-0 left-0 h-56 w-56 opacity-25"
+            style={{
+              backgroundImage: "radial-gradient(circle, var(--gold) 1px, transparent 1px)",
+              backgroundSize: "16px 16px",
+            }}
+          />
+
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10 items-start">
+
+          {/* ── LEFT ── */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
             <Reveal>
-              <div className="space-y-8">
-                {[
-                  { Icon: MapPin, k: "Head Office", v: "Chandy's Group, Kerala, India" },
-                  { Icon: Phone, k: "Phone", v: "+91 · Contact for details" },
-                  { Icon: Mail, k: "Email", v: "info@chandys.co.in" },
-                ].map((c) => (
-                  <div key={c.k} className="flex gap-5 border-b pb-8" style={{ borderColor: "var(--line)" }}>
+              <div className="flex items-center gap-3">
+                <span className="gold-rule" />
+                <span className="eyebrow">Contact</span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <h2
+                className="text-[clamp(1.8rem,3.5vw,2.8rem)] leading-[1.08] font-medium"
+                style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
+              >
+                Let's Build
+                <br />
+                <em style={{ color: "var(--gold)", fontStyle: "italic" }}>the Future</em>
+                <br />
+                Together.
+              </h2>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <div className="h-px w-12" style={{ background: "var(--gold)" }} />
+            </Reveal>
+
+            <Reveal delay={200}>
+              <p className="text-[13px] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                Have a project in mind? We'd love to hear about it.
+                Reach out to us and let's create something extraordinary.
+              </p>
+            </Reveal>
+
+            {/* Contact items */}
+            <div className="flex flex-col gap-0">
+              {contacts.map((c, i) => (
+                <Reveal key={c.label} delay={260 + i * 60}>
+                  <div
+                    className="flex items-center gap-3 py-3"
+                    style={{
+                      borderBottom: i < contacts.length - 1 ? "1px solid var(--line)" : "none",
+                    }}
+                  >
                     <span
-                      className="grid h-12 w-12 shrink-0 place-items-center rounded-full"
-                      style={{ background: "var(--ink)", color: "var(--paper)" }}
+                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
+                      style={{ border: "1.5px solid var(--gold)", color: "var(--gold)" }}
                     >
-                      <c.Icon className="h-5 w-5" />
+                      <c.Icon className="h-3.5 w-3.5" />
                     </span>
                     <div>
-                      <div className="text-[10px] tracking-[0.4em] uppercase text-[color:var(--ink-soft)]">
-                        {c.k}
+                      <div
+                        className="mb-1 text-[10px] font-semibold tracking-[0.35em] uppercase"
+                        style={{ color: "var(--gold)" }}
+                      >
+                        {c.label}
                       </div>
                       <div
-                        className="mt-2 text-xl"
-                        style={{ fontFamily: "var(--font-display)" }}
+                        className="text-[14px] leading-snug whitespace-pre-line"
+                        style={{ color: "var(--ink)", fontFamily: "var(--font-display)" }}
                       >
-                        {c.v}
+                        {c.value}
                       </div>
                     </div>
                   </div>
-                ))}
-                <div
-                  className="relative h-64 overflow-hidden rounded-3xl"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, var(--canvas), var(--paper)), radial-gradient(circle at 30% 30%, var(--gold) 0%, transparent 60%)",
-                    border: "1px solid var(--line)",
-                  }}
+                </Reveal>
+              ))}
+            </div>
+
+            {/* Response time card */}
+            <Reveal delay={500}>
+              <div
+                className="flex items-center gap-3 rounded-2xl px-4 py-3"
+                style={{
+                  background: "var(--paper)",
+                  border: "1px solid var(--line)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span
+                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
+                  style={{ border: "1.5px solid var(--gold)", color: "var(--gold)" }}
                 >
-                  <div
-                    className="absolute inset-0 opacity-40"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px)",
-                      backgroundSize: "40px 40px",
-                    }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex items-center gap-3 rounded-full bg-white px-5 py-3 text-sm shadow-md">
-                      <MapPin className="h-4 w-4" style={{ color: "var(--gold)" }} />
-                      <span style={{ fontFamily: "var(--font-display)" }}>
-                        Kerala, India
-                      </span>
-                    </div>
-                  </div>
+                  <Clock className="h-3.5 w-3.5" />
+                </span>
+                <div>
+                  <p className="text-xs" style={{ color: "var(--ink-soft)" }}>
+                    We typically respond within
+                  </p>
+                  <p
+                    className="text-base font-semibold"
+                    style={{ color: "var(--gold)", fontFamily: "var(--font-display)" }}
+                  >
+                    24 hours
+                  </p>
+                  <p className="text-xs" style={{ color: "var(--ink-soft)" }}>
+                    Let's turn your vision into reality.
+                  </p>
                 </div>
               </div>
             </Reveal>
           </div>
 
+          {/* ── RIGHT — Form Card ── */}
           <div className="lg:col-span-7">
             <Reveal delay={150}>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="rounded-3xl p-8 md:p-12"
-                style={{ background: "var(--paper)", border: "1px solid var(--line)", boxShadow: "var(--shadow-card)" }}
+              <div
+                className="rounded-3xl p-5 md:p-7 relative overflow-hidden"
+                style={{
+                  background: "var(--paper)",
+                  border: "1px solid var(--line)",
+                  boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
+                }}
               >
-                <div className="grid gap-6 md:grid-cols-2">
-                  <Field label="Full Name" placeholder="Your name" />
-                  <Field label="Email" placeholder="you@company.com" type="email" />
-                  <Field label="Phone" placeholder="+91" />
-                  <Field label="Company" placeholder="Optional" />
+                {/* Architectural sketch top-right */}
+                <div className="absolute top-0 right-0 w-36 h-36 opacity-10 pointer-events-none">
+                  <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                    <rect x="20" y="30" width="80" height="60" stroke="currentColor" strokeWidth="1.2" />
+                    <rect x="35" y="50" width="20" height="40" stroke="currentColor" strokeWidth="1" />
+                    <rect x="65" y="50" width="20" height="40" stroke="currentColor" strokeWidth="1" />
+                    <polyline points="10,30 60,5 110,30" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="20" y1="30" x2="20" y2="90" stroke="currentColor" strokeWidth="0.8" />
+                    <line x1="100" y1="30" x2="100" y2="90" stroke="currentColor" strokeWidth="0.8" />
+                    <line x1="35" y1="65" x2="55" y2="65" stroke="currentColor" strokeWidth="0.6" />
+                    <line x1="65" y1="65" x2="85" y2="65" stroke="currentColor" strokeWidth="0.6" />
+                  </svg>
                 </div>
-                <div className="mt-6">
-                  <label className="text-[10px] tracking-[0.4em] uppercase text-[color:var(--ink-soft)]">
-                    Message
-                  </label>
-                  <textarea
-                    rows={5}
-                    placeholder="Tell us about your project…"
-                    className="mt-3 w-full resize-none rounded-2xl border bg-transparent px-5 py-4 text-[15px] outline-none transition-colors focus:border-[color:var(--ink)]"
-                    style={{ borderColor: "var(--line)" }}
-                  />
+
+                {/* Form header */}
+                <div className="flex items-center gap-3 mb-5">
+                  <span
+                    className="grid h-9 w-9 place-items-center rounded-full"
+                    style={{ background: "var(--gold)", color: "white" }}
+                  >
+                    <Send className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <h3
+                      className="text-base font-medium"
+                      style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
+                    >
+                      Send Us a Message
+                    </h3>
+                    <div className="mt-1 h-px w-10" style={{ background: "var(--gold)" }} />
+                  </div>
                 </div>
-                <button
-                  type="submit"
-                  className="btn-ink mt-8 w-full md:w-auto"
-                >
-                  Send Enquiry
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
+
+                <form onSubmit={(e) => e.preventDefault()}>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <Field label="Full Name" placeholder="Your name" icon={<Users className="h-4 w-4" />} />
+                    <Field label="Email" placeholder="you@company.com" type="email" icon={<Mail className="h-4 w-4" />} />
+                    <Field label="Phone" placeholder="+91" icon={<Phone className="h-4 w-4" />} />
+                    <Field label="Company (Optional)" placeholder="Optional" icon={<Building2 className="h-4 w-4" />} />
+                  </div>
+
+                  <div className="mt-3">
+                    <label
+                      className="block text-[10px] font-semibold tracking-[0.35em] uppercase mb-2"
+                      style={{ color: "var(--ink-soft)" }}
+                    >
+                      Message
+                    </label>
+                    <div className="relative">
+                      <textarea
+                        rows={3}
+                        placeholder="Tell us about your project..."
+                        className="w-full resize-none rounded-xl border bg-transparent px-4 py-2.5 text-[13px] outline-none transition-colors"
+                        style={{ borderColor: "var(--line)", color: "var(--ink)" }}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="mt-4 w-full flex items-center justify-center gap-3 rounded-full py-3 text-xs font-semibold tracking-[0.18em] uppercase text-white transition-opacity hover:opacity-90"
+                    style={{ background: "var(--gold)" }}
+                  >
+                    Send Message
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </form>
+              </div>
             </Reveal>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -1141,22 +1332,42 @@ function Field({
   label,
   placeholder,
   type = "text",
+  icon,
 }: {
   label: string;
   placeholder: string;
   type?: string;
+  icon?: React.ReactNode;
 }) {
   return (
     <div>
-      <label className="text-[10px] tracking-[0.4em] uppercase text-[color:var(--ink-soft)]">
+      <label
+        className="block text-[9px] font-semibold tracking-[0.3em] uppercase mb-1.5"
+        style={{ color: "var(--ink-soft)" }}
+      >
         {label}
       </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        className="mt-3 w-full rounded-full border bg-transparent px-5 py-3 text-[15px] outline-none transition-colors focus:border-[color:var(--ink)]"
-        style={{ borderColor: "var(--line)" }}
-      />
+      <div className="relative flex items-center">
+        {icon && (
+          <span
+            className="absolute left-4 pointer-events-none"
+            style={{ color: "var(--ink-soft)" }}
+          >
+            {icon}
+          </span>
+        )}
+        <input
+          type={type}
+          placeholder={placeholder}
+          className="w-full rounded-full border bg-transparent py-2 text-[13px] outline-none transition-colors"
+          style={{
+            borderColor: "var(--line)",
+            color: "var(--ink)",
+            paddingLeft: icon ? "2.75rem" : "1.25rem",
+            paddingRight: "1.25rem",
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -1167,22 +1378,15 @@ function Field({
 function Footer() {
   return (
     <footer style={{ background: "var(--ink)", color: "var(--paper)" }}>
-      <div className="mx-auto max-w-[1400px] px-6 py-20 md:px-10 md:py-28">
+      <div className="mx-auto max-w-[1400px] px-6 pt-10 pb-8 md:pt-14 md:pb-10">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-3">
-              <span
-                className="grid h-10 w-10 place-items-center rounded-full text-sm"
-                style={{ background: "var(--gold)", color: "var(--ink)", fontFamily: "var(--font-display)", fontWeight: 600 }}
-              >
-                C
-              </span>
-              <div className="leading-none">
-                <div className="text-xl" style={{ fontFamily: "var(--font-display)" }}>
-                  Chandy's
-                </div>
-                <div className="mt-1 text-[9px] tracking-[0.35em] opacity-70">GROUP</div>
-              </div>
+          <div className="lg:col-span-4">
+            <div className="flex items-center">
+              <img
+                src={logoImg}
+                alt="Chandy's Group Logo"
+                className="h-[140px] md:h-[180px] w-auto object-contain shrink-0 my-[-50px]"
+              />
             </div>
             <p className="mt-8 max-w-md text-sm leading-relaxed text-white/60">
               A diversified business group delivering excellence across construction, homes,
@@ -1191,6 +1395,7 @@ function Footer() {
           </div>
           <FooterCol
             title="Our Companies"
+            className="lg:col-span-3"
             items={[
               "Chandy's Constructions",
               "Chandy's Homes",
@@ -1199,11 +1404,11 @@ function Footer() {
               "Restaurant Ente Amma",
             ]}
           />
-          <FooterCol title="Explore" items={["Home", "About", "Journey", "Why Us", "Contact"]} />
-          <FooterCol title="Follow" items={["LinkedIn", "Instagram", "Facebook", "YouTube"]} />
+          <FooterCol title="Explore" className="lg:col-span-2" items={["Home", "About", "Contact"]} />
+          <FooterCol title="Follow" className="lg:col-span-3" items={["LinkedIn", "Instagram", "Facebook", "YouTube"]} />
         </div>
-
-        <div className="mt-20 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs text-white/50 md:flex-row md:items-center" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+ 
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs text-white/50 md:flex-row md:items-center" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
           <div>© {new Date().getFullYear()} Chandy's Group of Companies. All rights reserved.</div>
           <div className="flex items-center gap-2">
             <span className="h-px w-6" style={{ background: "var(--gold)" }} />
@@ -1214,10 +1419,10 @@ function Footer() {
     </footer>
   );
 }
-
-function FooterCol({ title, items }: { title: string; items: string[] }) {
+ 
+function FooterCol({ title, items, className = "lg:col-span-2" }: { title: string; items: string[]; className?: string }) {
   return (
-    <div className="lg:col-span-2">
+    <div className={className}>
       <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
         {title}
       </div>
@@ -1244,8 +1449,6 @@ function Landing() {
       <Hero />
       <About />
       <Companies />
-      <Journey />
-      <WhyUs />
       <Excellence />
       <Featured />
       <Values />
