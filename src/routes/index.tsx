@@ -402,7 +402,7 @@ function About() {
     { k: "Quality", v: "Industry benchmark" },
   ];
   return (
-    <section id="about" className="relative py-12 md:py-20">
+    <section id="about" className="relative py-6 md:py-10">
       <div className="mx-auto grid max-w-[1400px] gap-14 px-6 md:px-10 lg:grid-cols-12 lg:gap-20">
         <Reveal className="lg:col-span-6">
           <div className="relative overflow-hidden rounded-3xl">
@@ -613,7 +613,7 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
 
 function Companies() {
   return (
-    <section id="companies" className="relative pt-12 pb-20 md:pt-20 md:pb-28" style={{ background: "var(--paper)" }}>
+    <section id="companies" className="relative pt-6 pb-10 md:pt-10 md:pb-14" style={{ background: "var(--paper)" }}>
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-16 flex flex-col justify-between gap-8 md:mb-20 md:flex-row md:items-end">
           <div className="max-w-3xl">
@@ -722,7 +722,7 @@ function Excellence() {
 
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         {/* Single row: heading left, pillars right — same height */}
-        <div className="grid gap-10 pt-6 pb-6 md:pt-8 md:pb-8 lg:grid-cols-12 lg:gap-16 items-center">
+        <div className="grid gap-10 pt-4 pb-4 md:pt-5 md:pb-5 lg:grid-cols-12 lg:gap-16 items-center">
 
           {/* Left: Heading + Body */}
           <div className="lg:col-span-5 flex flex-col justify-center">
@@ -864,7 +864,7 @@ function Featured() {
   ];
 
   return (
-    <section className="relative py-12 md:py-20 overflow-hidden">
+    <section className="relative py-6 md:py-10 overflow-hidden">
       {/* Faint Background Watermark matching layout */}
       <div className="absolute right-[-4rem] top-0 text-[20rem] font-bold text-black/5 opacity-[0.02] select-none pointer-events-none font-display leading-none">
         CH
@@ -1013,80 +1013,171 @@ function Values() {
     { name: "Trust", Icon: Users },
     { name: "Innovation", Icon: Sparkles },
   ];
+
   return (
-    <section className="relative py-12 md:py-20" style={{ background: "var(--paper)" }}>
+    <section className="relative py-6 md:py-10" style={{ background: "var(--canvas)" }}>
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
-          <div className="lg:col-span-5">
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-8 items-start">
+
+          {/* LEFT: Heading + sketch */}
+          <div className="lg:col-span-4 flex flex-col">
             <Reveal>
-              <div className="mb-5 flex items-center gap-3">
+              <div className="mb-4 flex items-center gap-3">
                 <span className="gold-rule" />
                 <span className="eyebrow">Our Values</span>
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[clamp(1.75rem,3.8vw,2.8rem)] leading-[1.05]">
+              <h2
+                className="text-[clamp(2.6rem,4.5vw,4rem)] leading-[1.02] font-medium"
+                style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}
+              >
                 What we
                 <br />
-                <em style={{ color: "var(--gold)" }}>strive for.</em>
+                <em style={{ color: "var(--gold)", fontStyle: "italic" }}>strive for.</em>
               </h2>
             </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-8 max-w-md text-[15px] leading-[1.85] text-[color:var(--ink-soft)]">
+            <Reveal delay={160}>
+              <div className="mt-5 h-px w-10" style={{ background: "var(--gold)" }} />
+            </Reveal>
+            <Reveal delay={220}>
+              <p className="mt-5 text-[14px] leading-[1.8]" style={{ color: "var(--ink-soft)" }}>
                 Leaving a trail of excellence — a philosophy that guides every project,
                 every partnership and every promise we make.
               </p>
             </Reveal>
+            {/* Architectural sketch */}
+            <Reveal delay={300}>
+              <div className="mt-8 opacity-20 select-none pointer-events-none hidden md:block" style={{ color: "var(--ink)" }}>
+                <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-[260px]">
+                  <rect x="30" y="80" width="200" height="130" stroke="currentColor" strokeWidth="1" />
+                  <rect x="70" y="110" width="35" height="55" stroke="currentColor" strokeWidth="0.8" />
+                  <rect x="155" y="110" width="35" height="55" stroke="currentColor" strokeWidth="0.8" />
+                  <rect x="100" y="130" width="60" height="80" stroke="currentColor" strokeWidth="0.8" />
+                  <polyline points="10,80 130,20 250,80" stroke="currentColor" strokeWidth="1" />
+                  <line x1="30" y1="80" x2="30" y2="210" stroke="currentColor" strokeWidth="0.7" />
+                  <line x1="230" y1="80" x2="230" y2="210" stroke="currentColor" strokeWidth="0.7" />
+                  <rect x="45" y="100" width="16" height="12" stroke="currentColor" strokeWidth="0.6" />
+                  <rect x="199" y="100" width="16" height="12" stroke="currentColor" strokeWidth="0.6" />
+                  <rect x="45" y="125" width="16" height="12" stroke="currentColor" strokeWidth="0.6" />
+                  <rect x="199" y="125" width="16" height="12" stroke="currentColor" strokeWidth="0.6" />
+                  <line x1="0" y1="210" x2="260" y2="210" stroke="currentColor" strokeWidth="0.8" />
+                  <line x1="8" y1="210" x2="8" y2="178" stroke="currentColor" strokeWidth="0.6" />
+                  <ellipse cx="8" cy="167" rx="11" ry="13" stroke="currentColor" strokeWidth="0.6" />
+                  <line x1="252" y1="210" x2="252" y2="178" stroke="currentColor" strokeWidth="0.6" />
+                  <ellipse cx="252" cy="167" rx="11" ry="13" stroke="currentColor" strokeWidth="0.6" />
+                </svg>
+              </div>
+            </Reveal>
           </div>
 
-          <div className="lg:col-span-7">
-            <div className="grid gap-8 md:grid-cols-2">
-              <Reveal>
-                <div className="rounded-3xl border p-6 md:p-8" style={{ borderColor: "var(--line)" }}>
-                  <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
-                    Our Mission
+          {/* RIGHT: Cards */}
+          <div className="lg:col-span-8 flex flex-col gap-4">
+
+            {/* Top row: Mission + Vision */}
+            <div className="grid gap-4 md:grid-cols-2">
+
+              {/* Mission card - light */}
+              <Reveal delay={80}>
+                <div
+                  className="relative overflow-hidden rounded-3xl flex flex-col justify-between"
+                  style={{ background: "var(--paper)", border: "1px solid var(--line)", minHeight: 300 }}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span
+                        className="grid h-11 w-11 place-items-center rounded-full shrink-0"
+                        style={{ border: "1.5px solid var(--gold)", background: "rgba(200,167,106,0.08)" }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--gold)" }}>
+                          <path d="M3 17L9 7l4 6 3-4 5 8H3z" strokeLinejoin="round" />
+                          <path d="M13 7V3l3 2-3 2z" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                      <div>
+                        <div className="text-[9px] font-semibold tracking-[0.35em] uppercase" style={{ color: "var(--gold)" }}>Our Mission</div>
+                        <div className="mt-1 h-px w-8" style={{ background: "var(--gold)" }} />
+                      </div>
+                    </div>
+                    <p className="text-[1.15rem] leading-snug" style={{ fontFamily: "var(--font-display)", color: "var(--ink)" }}>
+                      To build structures that go beyond bricks and mortars — turning dreams into signatures of excellence.
+                    </p>
                   </div>
-                  <p
-                    className="mt-5 text-2xl leading-snug"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    To build structures that go beyond bricks and mortars — turning dreams
-                    into signatures of excellence.
-                  </p>
+                  {/* Building photo strip */}
+                  <div className="relative h-24 overflow-hidden">
+                    <img src={constructionsImg} alt="Building" className="absolute inset-0 w-full h-full object-cover object-center" />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, var(--paper) 0%, transparent 60%)" }} />
+                  </div>
                 </div>
               </Reveal>
-              <Reveal delay={120}>
+
+              {/* Vision card - dark */}
+              <Reveal delay={160}>
                 <div
-                  className="rounded-3xl p-6 md:p-8"
-                  style={{ background: "var(--ink)", color: "var(--paper)" }}
+                  className="relative overflow-hidden rounded-3xl flex flex-col justify-between"
+                  style={{ background: "#111", minHeight: 300 }}
                 >
-                  <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
-                    Our Vision
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span
+                        className="grid h-11 w-11 place-items-center rounded-full shrink-0"
+                        style={{ border: "1.5px solid var(--gold)", background: "rgba(200,167,106,0.08)" }}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--gold)" }}>
+                          <ellipse cx="12" cy="12" rx="9" ry="5.5" />
+                          <circle cx="12" cy="12" r="2.5" />
+                        </svg>
+                      </span>
+                      <div>
+                        <div className="text-[9px] font-semibold tracking-[0.35em] uppercase" style={{ color: "var(--gold)" }}>Our Vision</div>
+                        <div className="mt-1 h-px w-8" style={{ background: "var(--gold)" }} />
+                      </div>
+                    </div>
+                    <p className="text-[1.15rem] leading-snug text-white" style={{ fontFamily: "var(--font-display)" }}>
+                      To ideate and build structures that are ahead of the times, blending tradition with modern craft.
+                    </p>
                   </div>
-                  <p
-                    className="mt-5 text-2xl leading-snug"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    To ideate and build structures that are ahead of the times, blending
-                    tradition with modern craft.
-                  </p>
+                  {/* City skyline */}
+                  <div className="relative h-20 overflow-hidden">
+                    <svg viewBox="0 0 400 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute bottom-0 w-full" style={{ opacity: 0.3 }}>
+                      <rect x="20" y="20" width="28" height="60" fill="var(--gold)" />
+                      <rect x="53" y="38" width="18" height="42" fill="var(--gold)" />
+                      <rect x="76" y="5" width="38" height="75" fill="var(--gold)" />
+                      <rect x="120" y="28" width="22" height="52" fill="var(--gold)" />
+                      <rect x="148" y="14" width="32" height="66" fill="var(--gold)" />
+                      <rect x="186" y="34" width="18" height="46" fill="var(--gold)" />
+                      <rect x="210" y="8" width="42" height="72" fill="var(--gold)" />
+                      <rect x="258" y="26" width="26" height="54" fill="var(--gold)" />
+                      <rect x="290" y="42" width="20" height="38" fill="var(--gold)" />
+                      <rect x="316" y="18" width="36" height="62" fill="var(--gold)" />
+                      <rect x="358" y="38" width="22" height="42" fill="var(--gold)" />
+                    </svg>
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #111 0%, transparent 70%)" }} />
+                  </div>
                 </div>
               </Reveal>
             </div>
 
-            <Reveal delay={200}>
-              <div className="mt-6 md:mt-8 rounded-3xl border p-6 md:p-8" style={{ borderColor: "var(--line)" }}>
-                <div className="mb-6 text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
-                  Core Values
+            {/* Core Values — full-width dark card */}
+            <Reveal delay={240}>
+              <div className="rounded-3xl p-6 md:p-8" style={{ background: "#111" }}>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex-1 h-px" style={{ background: "rgba(200,167,106,0.2)" }} />
+                  <span className="text-[9px] font-semibold tracking-[0.45em] uppercase whitespace-nowrap" style={{ color: "var(--gold)" }}>
+                    Core Values
+                  </span>
+                  <div className="flex-1 h-px" style={{ background: "rgba(200,167,106,0.2)" }} />
                 </div>
-                <div className="flex flex-wrap gap-x-10 gap-y-4">
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 md:gap-x-14">
                   {values.map((v) => (
-                    <div key={v.name} className="flex items-center gap-3">
-                      <v.Icon className="h-5 w-5 shrink-0" style={{ color: "var(--gold)" }} />
+                    <div key={v.name} className="flex flex-col items-center gap-2 text-center">
                       <span
-                        className="text-xl md:text-2xl"
-                        style={{ fontFamily: "var(--font-display)" }}
+                        className="grid h-12 w-12 place-items-center rounded-full"
+                        style={{ border: "1.5px solid var(--gold)", background: "rgba(200,167,106,0.06)" }}
                       >
+                        <v.Icon className="h-5 w-5" style={{ color: "var(--gold)" }} />
+                      </span>
+                      <span className="text-sm text-white/80" style={{ fontFamily: "var(--font-display)" }}>
                         {v.name}
                       </span>
                     </div>
@@ -1094,6 +1185,7 @@ function Values() {
                 </div>
               </div>
             </Reveal>
+
           </div>
         </div>
       </div>
@@ -1106,15 +1198,30 @@ function Values() {
 /* ------------------------------------------------------------------ */
 function Contact() {
   const contacts = [
-    { Icon: MapPin, label: "Head Office", value: "Chandy's AAA Centre,\nEttumanoor, Kerala, India" },
-    { Icon: Phone, label: "Mobile", value: "+91 98959 79999" },
-    { Icon: Mail, label: "Email", value: "info@chandysbuilders.com" },
+    {
+      Icon: MapPin,
+      label: "Head Office",
+      value: "Chandy's AAA Centre,\nEttumanoor, Kerala, India",
+      href: "https://maps.google.com/?q=Chandy's+AAA+Centre,+Ettumanoor,+Kerala,+India",
+    },
+    {
+      Icon: Phone,
+      label: "Mobile",
+      value: "+91 98959 79999",
+      href: "tel:+919895979999",
+    },
+    {
+      Icon: Mail,
+      label: "Email",
+      value: "info@chandysbuilders.com",
+      href: "mailto:info@chandysbuilders.com",
+    },
   ];
 
   return (
     <section
       id="contact"
-      className="relative py-6 md:py-10 overflow-hidden"
+      className="relative py-4 md:py-6 overflow-hidden"
       style={{ background: "var(--paper)" }}
     >
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
@@ -1175,14 +1282,18 @@ function Contact() {
             <div className="flex flex-col gap-0">
               {contacts.map((c, i) => (
                 <Reveal key={c.label} delay={260 + i * 60}>
-                  <div
-                    className="flex items-center gap-3 py-3"
+                  <a
+                    href={c.href}
+                    target={c.label === "Head Office" ? "_blank" : undefined}
+                    rel={c.label === "Head Office" ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 py-3 transition-opacity hover:opacity-70 active:opacity-50"
                     style={{
                       borderBottom: i < contacts.length - 1 ? "1px solid var(--line)" : "none",
+                      textDecoration: "none",
                     }}
                   >
                     <span
-                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
+                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors"
                       style={{ border: "1.5px solid var(--gold)", color: "var(--gold)" }}
                     >
                       <c.Icon className="h-3.5 w-3.5" />
@@ -1201,44 +1312,14 @@ function Contact() {
                         {c.value}
                       </div>
                     </div>
-                  </div>
+                  </a>
                 </Reveal>
               ))}
             </div>
 
             {/* Response time card */}
-            <Reveal delay={500}>
-              <div
-                className="flex items-center gap-3 rounded-2xl px-4 py-3"
-                style={{
-                  background: "var(--paper)",
-                  border: "1px solid var(--line)",
-                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                }}
-              >
-                <span
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
-                  style={{ border: "1.5px solid var(--gold)", color: "var(--gold)" }}
-                >
-                  <Clock className="h-3.5 w-3.5" />
-                </span>
-                <div>
-                  <p className="text-xs" style={{ color: "var(--ink-soft)" }}>
-                    We typically respond within
-                  </p>
-                  <p
-                    className="text-base font-semibold"
-                    style={{ color: "var(--gold)", fontFamily: "var(--font-display)" }}
-                  >
-                    24 hours
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--ink-soft)" }}>
-                    Let's turn your vision into reality.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
           </div>
+
 
           {/* ── RIGHT — Form Card ── */}
           <div className="lg:col-span-7">
@@ -1378,7 +1459,7 @@ function Field({
 function Footer() {
   return (
     <footer style={{ background: "var(--ink)", color: "var(--paper)" }}>
-      <div className="mx-auto max-w-[1400px] px-6 pt-10 pb-8 md:pt-14 md:pb-10">
+      <div className="mx-auto max-w-[1400px] px-6 pt-6 pb-5 md:pt-8 md:pb-6">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="flex items-center">
