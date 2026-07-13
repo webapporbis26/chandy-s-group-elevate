@@ -131,7 +131,7 @@ function Nav() {
             alt="Chandy's Group Logo"
             className="h-[90px] md:h-[140px] w-auto object-contain shrink-0 my-[-30px] md:my-[-50px]"
             style={{
-              filter: scrolled ? "brightness(0)" : "none",
+              filter: scrolled ? "none" : "brightness(0) invert(1)",
               transition: "filter 0.3s ease",
             }}
           />
