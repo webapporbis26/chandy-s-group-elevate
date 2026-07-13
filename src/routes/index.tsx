@@ -34,7 +34,7 @@ import hotelsImg from "@/assets/hotels.jpg";
 import buildersImg from "@/assets/builders.jpg";
 import restaurantImg from "@/assets/restaurant.jpg";
 import excellenceImg from "@/assets/excellence.jpg";
-import logoImg from "@/assets/builders.png";
+import logoImg from "@/assets/CHANDYS.png";
 import interiorDeskImg from "@/assets/interior_desk.png";
 import interiorMobImg from "@/assets/interior_mob.png";
 import constructDeskImg from "@/assets/construct_desk.png";
