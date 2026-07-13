@@ -972,26 +972,17 @@ function Featured() {
         <div className="overflow-hidden rounded-[32px] bg-[#111] grid lg:grid-cols-12" style={{ boxShadow: "var(--shadow-luxe)" }}>
           {/* Left: Image Side */}
           <div className="lg:col-span-7 relative h-[240px] sm:h-[300px] lg:h-[500px] overflow-hidden">
-            {(active as any).imgMob ? (
-              <>
-                <img
-                  src={(active as any).imgMob}
-                  alt={active.tag}
-                  className="md:hidden absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
-                  style={{ borderRadius: "32px 32px 0 0" }}
-                />
-                <img
-                  src={active.img}
-                  alt={active.tag}
-                  className="hidden md:block absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
-                  style={{ borderRadius: "32px 32px 0 0" }}
-                />
-              </>
-            ) : (
+            <img
+              src={active.img}
+              alt={active.tag}
+              className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ${(active as any).imgMob ? "hidden md:block" : ""}`}
+              style={{ borderRadius: "32px 32px 0 0" }}
+            />
+            {(active as any).imgMob && (
               <img
-                src={active.img}
+                src={(active as any).imgMob}
                 alt={active.tag}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
+                className="md:hidden absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
                 style={{ borderRadius: "32px 32px 0 0" }}
               />
             )}
