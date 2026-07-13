@@ -33,7 +33,7 @@ import hotelsImg from "@/assets/hotels.jpg";
 import buildersImg from "@/assets/builders.jpg";
 import restaurantImg from "@/assets/restaurant.jpg";
 import excellenceImg from "@/assets/excellence.jpg";
-import logoImg from "@/assets/builders-removebg-preview.png";
+import logoImg from "@/assets/builders.png";
 import homeDeskImg from "@/assets/home_desk.png";
 import homeMobImg from "@/assets/home_mob.png";
 import constructDeskImg from "@/assets/construct_desk.png";
