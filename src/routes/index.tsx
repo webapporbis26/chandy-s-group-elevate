@@ -12,6 +12,7 @@ import {
   HandshakeIcon,
   Home,
   Hotel,
+  Instagram,
   Mail,
   MapPin,
   Menu,
@@ -34,8 +35,8 @@ import buildersImg from "@/assets/builders.jpg";
 import restaurantImg from "@/assets/restaurant.jpg";
 import excellenceImg from "@/assets/excellence.jpg";
 import logoImg from "@/assets/builders.png";
-import homeDeskImg from "@/assets/home_desk.png";
-import homeMobImg from "@/assets/home_mob.png";
+import interiorDeskImg from "@/assets/interior_desk.png";
+import interiorMobImg from "@/assets/interior_mob.png";
 import constructDeskImg from "@/assets/construct_desk.png";
 import constMobImg from "@/assets/const_mob.png";
 import resortDeskImg from "@/assets/resort_desk.png";
@@ -222,13 +223,13 @@ function Nav() {
 function Hero() {
   const SLIDES = [
     {
-      imgDesk: homeDeskImg,
-      imgMob: homeMobImg,
-      tag: "Homes",
-      title: "Bricks, Mortars &",
-      titleItalic: "A Touch of Love.",
-      desc: "Chandy's Homes turns spaces into beautiful stories. Crafting elegant custom villas and family apartments built to stand the test of time.",
-      link: "https://chandys.co.in/chandys-homes.html",
+      imgDesk: interiorDeskImg,
+      imgMob: interiorMobImg,
+      tag: "Interiors",
+      title: "Markuruz Interiors",
+      titleItalic: "by Chandy's",
+      desc: "Elevating spaces with luxury and elegance. Crafting bespoke interior designs that reflect your unique style and vision.",
+      link: "https://chandys.co.in/chandys-builders.html",
     },
     {
       imgDesk: constructDeskImg,
@@ -508,6 +509,7 @@ type Company = {
   img: string;
   Icon: typeof Building2;
   link: string;
+  instagramLinks?: { label?: string; url: string }[];
 };
 
 const COMPANIES: Company[] = [
@@ -519,11 +521,14 @@ const COMPANIES: Company[] = [
     link: "https://chandys.co.in/chandys-construction.html",
   },
   {
-    name: "Chandy's Homes",
-    desc: "Where passion and professionalism meet. Beautiful abodes built with a deep connection to those who will call them home.",
-    img: homesImg,
-    Icon: Home,
-    link: "https://chandys.co.in/chandys-homes.html",
+    name: "Markuruz Interiors by Chandy's",
+    desc: "Elevating spaces with luxury and elegance. Crafting bespoke interior designs that reflect your unique style and vision.",
+    img: interiorDeskImg,
+    Icon: Sparkles,
+    link: "https://chandys.co.in/chandys-builders.html",
+    instagramLinks: [
+      { url: "https://www.instagram.com/markuruz_interiors?igsh=MWc5dnNwNWRndmp1ag==" }
+    ]
   },
   {
     name: "Chandy's Hotels & Resorts",
@@ -531,6 +536,10 @@ const COMPANIES: Company[] = [
     img: hotelsImg,
     Icon: Hotel,
     link: "https://chandys.co.in/chandys-hotels-resorts.html",
+    instagramLinks: [
+      { label: "Windy Woods", url: "https://www.instagram.com/chandys_windy_woods?igsh=MWpoMGo1NWhwY2NlcA==" },
+      { label: "Drizzle Drops", url: "https://www.instagram.com/chandysdrizzledrops?igsh=ejcxcjQ4dWgxcXNk" }
+    ]
   },
   {
     name: "Chandy's Builders",
@@ -538,6 +547,9 @@ const COMPANIES: Company[] = [
     img: buildersImg,
     Icon: Hammer,
     link: "https://chandys.co.in/chandys-builders.html",
+    instagramLinks: [
+      { url: "https://www.instagram.com/chandysbuilders?igsh=MTFyNGZ1MWo2cmkwZw==" }
+    ]
   },
   {
     name: "Restaurant Ente Amma",
@@ -545,16 +557,17 @@ const COMPANIES: Company[] = [
     img: restaurantImg,
     Icon: UtensilsCrossed,
     link: "https://chandys.co.in/ente-amma-restaurant.html",
+    instagramLinks: [
+      { url: "https://www.instagram.com/ente_amma_veg_restaurant?igsh=bXY4eml4ZjU3dGl2" }
+    ]
   },
 ];
 
 function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
   return (
-    <a
-      href={c.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group relative overflow-hidden rounded-3xl ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
+    <div
+      onClick={() => window.open(c.link, '_blank')}
+      className={`group relative overflow-hidden rounded-3xl cursor-pointer ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
       style={{ minHeight: large ? 420 : 280, boxShadow: "var(--shadow-card)" }}
     >
       <img
@@ -578,12 +591,33 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
           >
             <c.Icon className="h-5 w-5" />
           </span>
-          <span
-            className="grid h-11 w-11 place-items-center rounded-full transition-all duration-500 group-hover:rotate-45"
-            style={{ background: "var(--gold)", color: "var(--ink)" }}
-          >
-            <ArrowUpRight className="h-5 w-5" />
-          </span>
+          <div className="flex items-center gap-2">
+            {c.instagramLinks?.map((ig, i) => (
+              <a
+                key={i}
+                href={ig.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={ig.label || "Instagram"}
+                onClick={(e) => e.stopPropagation()}
+                className="z-20 grid h-11 w-11 place-items-center rounded-full backdrop-blur-md transition-all hover:scale-110 hover:bg-white/10"
+                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff" }}
+              >
+                <Instagram className="h-5 w-5" />
+                {ig.label && <span className="sr-only">{ig.label}</span>}
+              </a>
+            ))}
+            <a
+              href={c.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="z-20 grid h-11 w-11 place-items-center rounded-full transition-all duration-500 hover:rotate-45"
+              style={{ background: "var(--gold)", color: "var(--ink)" }}
+            >
+              <ArrowUpRight className="h-5 w-5" />
+            </a>
+          </div>
         </div>
         <div>
           <div className="mb-3 flex items-center gap-3">
@@ -601,13 +635,19 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
           <p className={`mt-3 max-w-lg text-sm leading-relaxed text-white/80 ${large ? "md:text-base" : ""}`}>
             {c.desc}
           </p>
-          <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium tracking-wide">
+          <a
+            href={c.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="z-20 mt-5 inline-flex items-center gap-2 text-sm font-medium tracking-wide hover:text-[color:var(--gold)] transition-colors"
+          >
             Explore Company
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </div>
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -812,19 +852,6 @@ function Excellence() {
 /* ------------------------------------------------------------------ */
 const FEATURES = [
   {
-    tag: "Homes",
-    title: "Bricks, mortars &",
-    titleGold: "a touch of love.",
-    body: "Chandy's Homes is where passion and professionalism take center stage. For us, a home holds a deep connection with its inhabitants — so we mix bricks and mortars with a touch of love to turn spaces into beautiful stories.",
-    img: homesImg,
-    link: "https://chandys.co.in/chandys-homes.html",
-    subFeatures: [
-      { name: "Thoughtful Design", Icon: Hammer },
-      { name: "Premium Quality", Icon: Award },
-      { name: "Personalized Approach", Icon: Users },
-    ],
-  },
-  {
     tag: "Hotels & Resorts",
     title: "Signature retreats.",
     titleGold: "Windy Woods & Drizzle Drops.",
@@ -835,6 +862,34 @@ const FEATURES = [
       { name: "Luxury Living", Icon: Hotel },
       { name: "Premium Service", Icon: Sparkles },
       { name: "Scenic Locations", Icon: MapPin },
+    ],
+  },
+  {
+    tag: "Ente Amma",
+    title: "Celebrating the flavours",
+    titleGold: "of Kerala.",
+    body: "A warm culinary home celebrating the flavours of Kerala with heart, hospitality, and heritage on every plate. Enjoy a truly authentic dining experience that tastes just like home.",
+    img: restDeskImg,
+    imgMob: restMobImg,
+    link: "https://chandys.co.in/ente-amma-restaurant.html",
+    subFeatures: [
+      { name: "Authentic Taste", Icon: UtensilsCrossed },
+      { name: "Warm Hospitality", Icon: Smile },
+      { name: "Heritage Recipes", Icon: Award },
+    ],
+  },
+  {
+    tag: "Markuruz Interiors",
+    title: "Elevating spaces with",
+    titleGold: "luxury and elegance.",
+    body: "Crafting bespoke interior designs that reflect your unique style and vision. Our interior design team transforms ordinary spaces into stunning masterpieces with unmatched attention to detail.",
+    img: interiorDeskImg,
+    imgMob: interiorMobImg,
+    link: "https://chandys.co.in/chandys-builders.html",
+    subFeatures: [
+      { name: "Bespoke Design", Icon: Sparkles },
+      { name: "Premium Materials", Icon: Award },
+      { name: "Expert Execution", Icon: Hammer },
     ],
   },
   {
@@ -917,12 +972,29 @@ function Featured() {
         <div className="overflow-hidden rounded-[32px] bg-[#111] grid lg:grid-cols-12" style={{ boxShadow: "var(--shadow-luxe)" }}>
           {/* Left: Image Side */}
           <div className="lg:col-span-7 relative h-[240px] sm:h-[300px] lg:h-[500px] overflow-hidden">
-            <img
-              src={active.img}
-              alt={active.tag}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
-              style={{ borderRadius: "32px 32px 0 0" }}
-            />
+            {(active as any).imgMob ? (
+              <>
+                <img
+                  src={(active as any).imgMob}
+                  alt={active.tag}
+                  className="md:hidden absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
+                  style={{ borderRadius: "32px 32px 0 0" }}
+                />
+                <img
+                  src={active.img}
+                  alt={active.tag}
+                  className="hidden md:block absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
+                  style={{ borderRadius: "32px 32px 0 0" }}
+                />
+              </>
+            ) : (
+              <img
+                src={active.img}
+                alt={active.tag}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms]"
+                style={{ borderRadius: "32px 32px 0 0" }}
+              />
+            )}
             {/* Soft gold accent rule at bottom of image on mobile */}
             <div className="absolute bottom-0 left-0 right-0 h-[4px] bg-[color:var(--gold)] lg:hidden" />
           </div>
@@ -1478,19 +1550,60 @@ function Footer() {
             title="Our Companies"
             className="lg:col-span-3"
             items={[
-              "Chandy's Constructions",
-              "Chandy's Homes",
-              "Chandy's Hotels & Resorts",
-              "Chandy's Builders",
-              "Restaurant Ente Amma",
+              { label: "Chandy's Constructions", href: "https://chandys.co.in/chandys-construction.html" },
+              { label: "Markuruz Interiors by Chandy's", href: "https://chandys.co.in/chandys-builders.html" },
+              { label: "Chandy's Hotels & Resorts", href: "https://chandys.co.in/chandys-hotels-resorts.html" },
+              { label: "Chandy's Builders", href: "https://chandys.co.in/chandys-builders.html" },
+              { label: "Restaurant Ente Amma", href: "https://chandys.co.in/ente-amma-restaurant.html" },
             ]}
           />
           <FooterCol title="Explore" className="lg:col-span-2" items={["Home", "About", "Contact"]} />
-          <FooterCol title="Follow" className="lg:col-span-3" items={["LinkedIn", "Instagram", "Facebook", "YouTube"]} />
+          <div className="lg:col-span-3">
+            <div className="text-[10px] tracking-[0.4em] uppercase mb-6" style={{ color: "var(--gold)" }}>
+              Follow
+            </div>
+            <ul className="space-y-3 text-sm text-white/70">
+              <li><a href="#" className="transition-colors hover:text-white block">LinkedIn</a></li>
+              <li>
+                <a href="https://www.instagram.com/chandysbuilders?igsh=MTFyNGZ1MWo2cmkwZw==" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Instagram className="h-4 w-4 opacity-70" />
+                  Chandy's Builders
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/ente_amma_veg_restaurant?igsh=bXY4eml4ZjU3dGl2" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Instagram className="h-4 w-4 opacity-70" />
+                  Restaurant Ente Amma
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/markuruz_interiors?igsh=MWc5dnNwNWRndmp1ag==" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Instagram className="h-4 w-4 opacity-70" />
+                  Markuruz Interiors
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/chandysdrizzledrops?igsh=ejcxcjQ4dWgxcXNk" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Instagram className="h-4 w-4 opacity-70" />
+                  Drizzle Drops Resort
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/chandys_windy_woods?igsh=MWpoMGo1NWhwY2NlcA==" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Instagram className="h-4 w-4 opacity-70" />
+                  Windy Woods Resort
+                </a>
+              </li>
+              <li><a href="#" className="transition-colors hover:text-white block">Facebook</a></li>
+              <li><a href="#" className="transition-colors hover:text-white block">YouTube</a></li>
+            </ul>
+          </div>
         </div>
  
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs text-white/50 md:flex-row md:items-center" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
-          <div>© {new Date().getFullYear()} Chandy's Group of Companies. All rights reserved.</div>
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 border-t pt-8 text-xs text-center text-white/50" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+          <div className="leading-relaxed">
+            © {new Date().getFullYear()} Chandy's Group of Companies. All rights reserved. <span className="hidden md:inline">|</span><br className="md:hidden" /> Developed by <a href="https://webapporbis.com" target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">Web App Orbis</a>
+          </div>
           <div className="flex items-center gap-2">
             <span className="h-px w-6" style={{ background: "var(--gold)" }} />
             <span className="tracking-[0.3em] uppercase">Since 1994</span>
@@ -1501,20 +1614,25 @@ function Footer() {
   );
 }
  
-function FooterCol({ title, items, className = "lg:col-span-2" }: { title: string; items: string[]; className?: string }) {
+function FooterCol({ title, items, className = "lg:col-span-2" }: { title: string; items: (string | { label: string; href: string })[]; className?: string }) {
   return (
     <div className={className}>
       <div className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "var(--gold)" }}>
         {title}
       </div>
       <ul className="mt-6 space-y-3 text-sm text-white/70">
-        {items.map((it) => (
-          <li key={it}>
-            <a href="#" className="transition-colors hover:text-white">
-              {it}
-            </a>
-          </li>
-        ))}
+        {items.map((it, i) => {
+          const isString = typeof it === "string";
+          const label = isString ? it : it.label;
+          const href = isString ? "#" : it.href;
+          return (
+            <li key={i}>
+              <a href={href} target={href !== "#" ? "_blank" : undefined} rel={href !== "#" ? "noopener noreferrer" : undefined} className="transition-colors hover:text-white block">
+                {label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
