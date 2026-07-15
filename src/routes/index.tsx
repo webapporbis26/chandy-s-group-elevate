@@ -178,37 +178,88 @@ function Nav() {
         </div>
       </div>
 
-      {open && (
-        <div
-          className="lg:hidden"
-          style={{
-            background: "var(--paper)",
-            borderTop: "1px solid var(--line)",
-          }}
-        >
-          <div className="flex flex-col gap-1 px-6 py-6">
-            {NAV.map((n) => (
+      {/* Modern Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
+          open ? "opacity-100 pointer-events-auto backdrop-blur-md" : "opacity-0 pointer-events-none backdrop-blur-none"
+        }`}
+        style={{ background: "rgba(0, 0, 0, 0.4)" }}
+        onClick={() => setOpen(false)}
+      />
+      
+      {/* Modern Mobile Menu Drawer */}
+      <div
+        className={`fixed inset-y-0 right-0 z-50 w-[85vw] max-w-[400px] flex flex-col justify-between transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ background: "var(--paper)" }}
+      >
+        <div className="flex flex-col px-8 pt-24 pb-8 gap-8 h-full overflow-y-auto">
+          {/* Close button for drawer */}
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute top-6 right-6 grid h-10 w-10 place-items-center rounded-full border border-[color:var(--line)] text-[color:var(--ink)] active:scale-95 transition-transform"
+            style={{ background: "var(--paper)" }}
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          <div className="flex flex-col gap-6 mt-4">
+            {NAV.map((n, i) => (
               <a
                 key={n.href}
                 href={n.href}
                 onClick={() => setOpen(false)}
-                className="border-b py-3 text-sm"
-                style={{ color: "var(--ink)", borderColor: "var(--line)" }}
+                className="text-4xl font-semibold tracking-tighter transition-all active:scale-95"
+                style={{
+                  color: "var(--ink)",
+                  opacity: open ? 1 : 0,
+                  transform: open ? "translateY(0)" : "translateY(20px)",
+                  transition: `all 0.5s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.08}s`
+                }}
               >
                 {n.label}
               </a>
             ))}
+          </div>
+
+          <div 
+            className="mt-auto flex flex-col gap-6"
+            style={{
+              opacity: open ? 1 : 0,
+              transform: open ? "translateY(0)" : "translateY(20px)",
+              transition: `all 0.5s cubic-bezier(0.22,1,0.36,1) ${0.1 + NAV.length * 0.08}s`
+            }}
+          >
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="mt-4 rounded-full px-5 py-3 text-center text-sm"
+              className="rounded-full px-6 py-4 text-center text-[15px] font-medium tracking-wide transition-transform active:scale-95 flex items-center justify-center gap-2"
               style={{ background: "var(--ink)", color: "var(--paper)" }}
             >
               Contact Us
+              <ArrowRight className="h-4 w-4" />
             </a>
+
+            <div className="pt-6 border-t border-[color:var(--line)]">
+              <p className="text-xs font-semibold tracking-wider uppercase text-[color:var(--gold)] mb-4">
+                Connect With Us
+              </p>
+              <div className="flex gap-5">
+                <a href="#" className="text-[color:var(--ink)] opacity-60 hover:opacity-100 transition-opacity">
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-[color:var(--ink)] opacity-60 hover:opacity-100 transition-opacity">
+                  <Mail className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-[color:var(--ink)] opacity-60 hover:opacity-100 transition-opacity">
+                  <Phone className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
@@ -243,7 +294,7 @@ function Hero() {
       title: "Windy Woods.",
       titleItalic: "Drizzle Drops.",
       desc: "Discover quiet luxury, breathtaking natural landscapes, and curated boutique hospitality designed to create timeless resort memories.",
-      link: "https://chandys.co.in/chandys-hotels-resorts.html",
+      link: "https://chandyshotelsandresorts.com/",
     },
     {
       imgDesk: restDeskImg,
@@ -531,7 +582,7 @@ const COMPANIES: Company[] = [
     desc: "Signature hospitality experiences including Windy Woods and Drizzle Drops — retreats crafted for quiet luxury.",
     img: hotelsImg,
     Icon: Hotel,
-    link: "https://chandys.co.in/chandys-hotels-resorts.html",
+    link: "https://chandyshotelsandresorts.com/",
     instagramLinks: [
       { label: "Windy Woods", url: "https://www.instagram.com/chandys_windy_woods?igsh=MWpoMGo1NWhwY2NlcA==" },
       { label: "Drizzle Drops", url: "https://www.instagram.com/chandysdrizzledrops?igsh=ejcxcjQ4dWgxcXNk" }
@@ -853,7 +904,7 @@ const FEATURES = [
     titleGold: "Windy Woods & Drizzle Drops.",
     body: "Our hospitality portfolio brings the same craftsmanship to leisure — quiet, elegant retreats where design, service and setting come together to create unforgettable stays.",
     img: hotelsImg,
-    link: "https://chandys.co.in/chandys-hotels-resorts.html",
+    link: "https://chandyshotelsandresorts.com/",
     subFeatures: [
       { name: "Luxury Living", Icon: Hotel },
       { name: "Premium Service", Icon: Sparkles },
@@ -1539,7 +1590,7 @@ function Footer() {
             items={[
               { label: "Chandy's Constructions", href: "https://chandys.co.in/chandys-construction.html" },
               { label: "Markuruz Interiors by Chandy's", href: "https://chandys.co.in/chandys-builders.html" },
-              { label: "Chandy's Hotels & Resorts", href: "https://chandys.co.in/chandys-hotels-resorts.html" },
+              { label: "Chandy's Hotels & Resorts", href: "https://chandyshotelsandresorts.com/" },
               { label: "Chandy's Builders", href: "https://chandys.co.in/chandys-builders.html" },
               { label: "Restaurant Ente Amma", href: "https://chandys.co.in/ente-amma-restaurant.html" },
             ]}
