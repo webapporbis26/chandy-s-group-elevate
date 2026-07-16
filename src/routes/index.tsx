@@ -8,11 +8,13 @@ import {
   ChevronDown,
   Clock,
   Cpu,
+  Facebook,
   Hammer,
   HandshakeIcon,
   Home,
   Hotel,
   Instagram,
+  Linkedin,
   Mail,
   MapPin,
   Menu,
@@ -24,6 +26,7 @@ import {
   Users,
   UtensilsCrossed,
   X,
+  Youtube,
 } from "lucide-react";
 
 import heroImg from "@/assets/hero.jpg";
@@ -615,7 +618,7 @@ function CompanyCard({ c, large = false }: { c: Company; large?: boolean }) {
     <div
       onClick={() => window.open(c.link, '_blank')}
       className={`group relative overflow-hidden rounded-3xl cursor-pointer ${large ? "lg:col-span-2 lg:row-span-2" : ""}`}
-      style={{ minHeight: large ? 420 : 280, boxShadow: "var(--shadow-card)" }}
+      style={{ minHeight: large ? 520 : 350, boxShadow: "var(--shadow-card)" }}
     >
       <img
         src={c.img}
@@ -727,7 +730,7 @@ function Companies() {
         </div>
 
         <Reveal>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[300px]">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[370px]">
             <CompanyCard c={COMPANIES[0]} large />
             <CompanyCard c={COMPANIES[1]} />
             <CompanyCard c={COMPANIES[2]} />
@@ -1307,6 +1310,34 @@ function Values() {
 /*  Section 9 — Contact                                                */
 /* ------------------------------------------------------------------ */
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    message: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const title = "*New Inquiry from Chandy's Group Website*";
+    const text = `${title}\n\n` +
+      `*Name:* ${formData.name}\n` +
+      `*Email:* ${formData.email}\n` +
+      `*Phone:* ${formData.phone}\n` +
+      `*Company:* ${formData.company || "N/A"}\n\n` +
+      `*Message:*\n${formData.message}`;
+
+    const encodedText = encodeURIComponent(text);
+    const whatsappUrl = `https://wa.me/919895979999?text=${encodedText}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   const contacts = [
     {
       Icon: MapPin,
@@ -1475,12 +1506,44 @@ function Contact() {
                   </div>
                 </div>
 
-                <form onSubmit={(e) => e.preventDefault()}>
+                <form onSubmit={handleSubmit}>
                   <div className="grid gap-3 md:grid-cols-2">
-                    <Field label="Full Name" placeholder="Your name" icon={<Users className="h-4 w-4" />} />
-                    <Field label="Email" placeholder="you@company.com" type="email" icon={<Mail className="h-4 w-4" />} />
-                    <Field label="Phone" placeholder="+91" icon={<Phone className="h-4 w-4" />} />
-                    <Field label="Company (Optional)" placeholder="Optional" icon={<Building2 className="h-4 w-4" />} />
+                    <Field
+                      label="Full Name"
+                      placeholder="Your name"
+                      icon={<Users className="h-4 w-4" />}
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Field
+                      label="Email"
+                      placeholder="you@company.com"
+                      type="email"
+                      icon={<Mail className="h-4 w-4" />}
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Field
+                      label="Phone"
+                      placeholder="+91"
+                      icon={<Phone className="h-4 w-4" />}
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Field
+                      label="Company (Optional)"
+                      placeholder="Optional"
+                      icon={<Building2 className="h-4 w-4" />}
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                    />
                   </div>
 
                   <div className="mt-3">
@@ -1494,6 +1557,10 @@ function Contact() {
                       <textarea
                         rows={3}
                         placeholder="Tell us about your project..."
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
                         className="w-full resize-none rounded-xl border bg-transparent px-4 py-2.5 text-[13px] outline-none transition-colors"
                         style={{ borderColor: "var(--line)", color: "var(--ink)" }}
                       />
@@ -1524,11 +1591,19 @@ function Field({
   placeholder,
   type = "text",
   icon,
+  name,
+  value,
+  onChange,
+  required,
 }: {
   label: string;
   placeholder: string;
   type?: string;
   icon?: React.ReactNode;
+  name?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }) {
   return (
     <div>
@@ -1550,6 +1625,10 @@ function Field({
         <input
           type={type}
           placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
           className="w-full rounded-full border bg-transparent py-2 text-[13px] outline-none transition-colors"
           style={{
             borderColor: "var(--line)",
@@ -1601,7 +1680,6 @@ function Footer() {
               Follow
             </div>
             <ul className="space-y-3 text-sm text-white/70">
-              <li><a href="#" className="transition-colors hover:text-white block">LinkedIn</a></li>
               <li>
                 <a href="https://www.instagram.com/chandysbuilders?igsh=MTFyNGZ1MWo2cmkwZw==" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white flex items-center gap-2">
                   <Instagram className="h-4 w-4 opacity-70" />
@@ -1632,8 +1710,24 @@ function Footer() {
                   Windy Woods Resort
                 </a>
               </li>
-              <li><a href="#" className="transition-colors hover:text-white block">Facebook</a></li>
-              <li><a href="#" className="transition-colors hover:text-white block">YouTube</a></li>
+              <li>
+                <a href="#" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Facebook className="h-4 w-4 opacity-70" />
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Linkedin className="h-4 w-4 opacity-70" />
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="#" className="transition-colors hover:text-white flex items-center gap-2">
+                  <Youtube className="h-4 w-4 opacity-70" />
+                  YouTube
+                </a>
+              </li>
             </ul>
           </div>
         </div>
