@@ -115,15 +115,26 @@ function Nav() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
+  // Lock background scroll while the mobile menu is open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
-    <header
-      className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
-      style={{
-        background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
-        backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
-      }}
-    >
+    <>
+      <header
+        className="fixed inset-x-0 top-0 z-50 transition-all duration-500"
+        style={{
+          background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
+          backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--line)" : "1px solid transparent",
+        }}
+      >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-6 py-2 md:px-10 md:py-3">
         <a
           href="#home"
@@ -181,18 +192,24 @@ function Nav() {
         </div>
       </div>
 
+      </header>
+
+      {/* NOTE: overlay + drawer live OUTSIDE the <header> on purpose.
+          The header gets `backdrop-filter` when scrolled, which would make it
+          the containing block for `position: fixed` descendants and collapse
+          the drawer to the header's height on mobile. */}
       {/* Modern Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 z-[60] transition-all duration-500 lg:hidden ${
           open ? "opacity-100 pointer-events-auto backdrop-blur-md" : "opacity-0 pointer-events-none backdrop-blur-none"
         }`}
         style={{ background: "rgba(0, 0, 0, 0.4)" }}
         onClick={() => setOpen(false)}
       />
-      
+
       {/* Modern Mobile Menu Drawer */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-[85vw] max-w-[400px] flex flex-col justify-between transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+        className={`fixed inset-y-0 right-0 z-[70] w-[85vw] max-w-[400px] flex flex-col justify-between transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         style={{ background: "var(--paper)" }}
@@ -263,7 +280,7 @@ function Nav() {
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }
 
